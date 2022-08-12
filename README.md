@@ -1,4 +1,4 @@
 # flutter-memos
 Just for me
 
-[wiki](flutter-memos/wiki)
+[wiki](../../flutter-memos/wiki)
