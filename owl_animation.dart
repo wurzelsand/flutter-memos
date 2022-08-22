@@ -18,10 +18,10 @@ class FadeLabel {
 }
 
 class FadeLabelCubit extends Cubit<FadeLabel> {
-  FadeLabelCubit(String label, Opacity opacity)
-      : super(FadeLabel(label: label, opacity: opacity));
+  FadeLabelCubit({required FadeLabel fadeLabel}) : super(fadeLabel);
 
-  void fadeIn() => emit(FadeLabel(label: state.label, opacity: Opacity.opaque));
+  void fadeIn() =>
+      emit(FadeLabel(label: state.label, opacity: Opacity.opaque));
 
   void fadeOut() =>
       emit(FadeLabel(label: state.label, opacity: Opacity.transparent));
@@ -42,22 +42,14 @@ class FadeInDemo extends StatelessWidget {
       builder: (context, state) {
         return Column(children: <Widget>[
           Image.network(owlUrl),
-          if (state.opacity == Opacity.transparent)
-            TextButton(
+          TextButton(
               child: Text(
                 state.label,
                 style: const TextStyle(color: Colors.blueAccent),
               ),
-              onPressed: () => context.read<FadeLabelCubit>().fadeIn(),
-            )
-          else
-            TextButton(
-              child: Text(
-                state.label,
-                style: const TextStyle(color: Colors.blueAccent),
-              ),
-              onPressed: () => context.read<FadeLabelCubit>().fadeOut(),
-            ),
+              onPressed: () => state.opacity == Opacity.transparent
+                  ? context.read<FadeLabelCubit>().fadeIn()
+                  : context.read<FadeLabelCubit>().fadeOut()),
           AnimatedOpacity(
             duration: const Duration(seconds: 2),
             opacity: state.opacity.raw,
@@ -84,7 +76,9 @@ class MyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => FadeLabelCubit('Show Details', Opacity.transparent),
+      create: (_) => FadeLabelCubit(
+          fadeLabel: const FadeLabel(
+              label: 'Show Details', opacity: Opacity.transparent)),
       child: const FadeInDemo(),
     );
   }
