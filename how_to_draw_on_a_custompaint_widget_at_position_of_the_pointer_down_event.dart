@@ -39,7 +39,7 @@ class MyHomePageState extends State<MyHomePage> {
               _paintKey.currentContext?.findRenderObject() as RenderBox;
           Offset offset = referenceBox.globalToLocal(event.position);
           setState(() {
-            _offset = offset;
+            _offset = offset; // better: event.localPosition; no need for GlobalKey
           });
         },
         child: CustomPaint(
