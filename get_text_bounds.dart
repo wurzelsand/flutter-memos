@@ -31,31 +31,32 @@ class MyWidget extends StatelessWidget {
         fontStyle: FontStyle.italic,
       ),
     );
-    return Padding(
-      padding: const EdgeInsets.only(left: 8),
-      child: FutureBuilder(
-        future: getTextBounds(text: textSpan),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            final bounds = snapshot.data;
-            if (bounds != null) {
-              return Stack(
+    return FutureBuilder(
+      future: getTextBounds(text: textSpan),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          final bounds = snapshot.data;
+          if (bounds != null) {
+            return Container(
+              color: Colors.green,
+              width: bounds.width,
+              height: bounds.height,
+              child: Stack(
                 children: [
-                  Container(
-                    transform:
-                        Matrix4.translationValues(bounds.left, bounds.top, 0),
-                    width: bounds.width,
-                    height: bounds.height,
-                    color: Colors.green,
+                  Positioned(
+                    top: -bounds.top,
+                    left: -bounds.left,
+                    child: RichText(
+                      text: textSpan,
+                    ),
                   ),
-                  const Text.rich(textSpan),
                 ],
-              );
-            }
+              ),
+            );
           }
-          return Container();
-        },
-      ),
+        }
+        return Container();
+      },
     );
   }
 }
