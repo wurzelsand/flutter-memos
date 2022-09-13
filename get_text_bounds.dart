@@ -115,6 +115,7 @@ ui.Rect _getBufferBounds(
     var first = true;
     for (int x = 0; x < width; ++x) {
       if (getPixel(x, y) != 0) {
+        // getPixel(x, y) >>> 24 != 0
         if (x < left) {
           left = x;
         }
