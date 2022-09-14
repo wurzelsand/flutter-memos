@@ -27,49 +27,58 @@ class MyWidget extends StatelessWidget {
       text: 'pixel',
       style: TextStyle(
         color: Colors.red,
-        fontSize: 400,
+        fontSize: 300,
         fontStyle: FontStyle.italic,
       ),
     );
-    return FutureBuilder(
-      future: getTextBounds(text: textSpan),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          final bounds = snapshot.data;
-          if (bounds != null) {
-            return Container(
-              color: Colors.green,
-              width: bounds.width,
-              height: bounds.height,
-              child: Stack(
+    return Padding(
+      padding: const EdgeInsets.only(left: 16),
+      child: FutureBuilder(
+        future: getTextBounds(text: textSpan, context: context),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            final bounds = snapshot.data;
+            if (bounds != null) {
+              return Stack(
+                clipBehavior: Clip.none,
                 children: [
                   Positioned(
-                    top: -bounds.top,
-                    left: -bounds.left,
-                    child: RichText(
-                      text: textSpan,
+                    top: bounds.top,
+                    left: bounds.left,
+                    child: Container(
+                      width: bounds.width,
+                      height: bounds.height,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Colors.black,
+                            strokeAlign: StrokeAlign.outside),
+                      ),
                     ),
                   ),
+                  const Text.rich(textSpan),
                 ],
-              ),
-            );
+              );
+            }
           }
-        }
-        return Container();
-      },
+          return Container();
+        },
+      ),
     );
   }
 }
 
 Future<Rect> getTextBounds({
   required TextSpan text,
+  required BuildContext context,
   ui.TextDirection textDirection = ui.TextDirection.ltr,
 }) async {
   final recorder = ui.PictureRecorder();
   final canvas = ui.Canvas(recorder);
+  final textScaleFactor = MediaQuery.of(context).textScaleFactor;
   final painter = TextPainter(
     text: text,
     textAlign: ui.TextAlign.center,
+    textScaleFactor: textScaleFactor,
     textDirection: textDirection,
   );
   painter.layout();
@@ -114,8 +123,9 @@ ui.Rect _getBufferBounds(
   for (int y = 0; y < height; ++y) {
     var first = true;
     for (int x = 0; x < width; ++x) {
-      // if (getPixel(x, y) >>> 24 != 0) {}
-      if (getPixel(x, y) != 0) {
+      // 8 bits alpha chanel threshold (0-254):
+      const threshold = 64;
+      if (getPixel(x, y) >>> 24 > threshold) {
         if (x < left) {
           left = x;
         }
