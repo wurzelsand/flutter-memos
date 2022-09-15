@@ -1,6 +1,5 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
 
 void main() {
   runApp(const MyApp());
@@ -27,15 +26,19 @@ class MyWidget extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<MyWidget> {
-  Future<ui.Image> textToImage(String? text, TextStyle? style) async {
+  Future<ui.Image>? imageRequest;
+
+  Future<ui.Image> textToImage({
+    required TextSpan text,
+    required double upscale,
+  }) async {
     ui.PictureRecorder recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
-    final textSpan = TextSpan(
+    final painter = TextPainter(
       text: text,
-      style: style,
+      textDirection: TextDirection.ltr,
+      textScaleFactor: upscale,
     );
-    final painter =
-        TextPainter(text: textSpan, textDirection: TextDirection.ltr);
     painter.layout();
     painter.paint(canvas, Offset.zero);
     final ui.Image image = await recorder
@@ -46,20 +49,36 @@ class _MyWidgetState extends State<MyWidget> {
 
   @override
   Widget build(BuildContext context) {
+    const textSpan = TextSpan(
+      text: 'Hello',
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 200,
+      ),
+    );
+    final upscale = MediaQuery.of(context).devicePixelRatio;
+    imageRequest ??= textToImage(text: textSpan, upscale: upscale);
     return FutureBuilder(
-      future: textToImage('Hello', const TextStyle(fontSize: 200)),
+      future: imageRequest,
       builder: ((context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          final ui.Image? image = snapshot.data;
+          final image = snapshot.data;
           if (image != null) {
+            final width = image.width / upscale;
+            final height = image.height / upscale;
             return Stack(
               children: [
                 Container(
-                    width: image.width.toDouble(),
-                    height: image.height.toDouble(),
-                    color: Colors.green),
-                RawImage(
-                  image: image,
+                  width: width,
+                  height: height,
+                  color: Colors.green,
+                ),
+                SizedBox(
+                  width: width,
+                  height: height,
+                  child: RawImage(
+                    image: image,
+                  ),
                 ),
               ],
             );

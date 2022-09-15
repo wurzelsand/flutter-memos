@@ -7,7 +7,11 @@ Just for me
 
 [Draw text on image canvas:](draw_text_on_image_canvas.dart)
 
-<a><img src="images/draw-text-on-image-canvas.png" width=200>
+no scale:
+<a><img src="images/draw-text-noscale.png"></a>
+
+upscaled:
+<a><img src="images/draw-text-upscale.png"></a>
 
 * * *
 
