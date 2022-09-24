@@ -9,6 +9,8 @@ Just for me
 
 <a><img src="images/starter-with-value-notifier.gif" width=50%></a>
 
+* I converted the Flutter starter app so that an AnimationBuilder listens to a ValueNotifier and therefore the State object can be omitted.
+
 ## [Draw text on image canvas:](draw_text_on_image_canvas.dart)
 
 no scale:
