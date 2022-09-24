@@ -1,11 +1,15 @@
 # flutter-memos
 Just for me
 
-[Wiki](../../wiki)
+## [Wiki](../../wiki)
 
 # Snippets
 
-[Draw text on image canvas:](draw_text_on_image_canvas.dart)
+## [AnimationBuilder with ValueNotifier:](animation_builder_with_value_notifier.dart)
+
+<a><img src="images/starter-with-value-notifier.gif"></a>
+
+## [Draw text on image canvas:](draw_text_on_image_canvas.dart)
 
 no scale:
 <a><img src="images/draw-text-noscale.png"></a>
@@ -15,7 +19,7 @@ upscaled:
 
 * * *
 
-[Get text bounds:](get_text_bounds.dart)
+## [Get text bounds:](get_text_bounds.dart)
 
 To determine the smallest rectangle that completely encloses a single-line text:
 
