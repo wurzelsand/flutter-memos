@@ -7,7 +7,7 @@ Just for me
 
 ## [AnimationBuilder with ValueNotifier:](animation_builder_with_value_notifier.dart)
 
-<a><img src="images/starter-with-value-notifier.gif"></a>
+<a><img src="images/starter-with-value-notifier.gif" width=50%></a>
 
 ## [Draw text on image canvas:](draw_text_on_image_canvas.dart)
 
