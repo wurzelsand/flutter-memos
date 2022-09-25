@@ -26,7 +26,7 @@ class MyWidget extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<MyWidget> {
-  Future<ui.Rect>? boundsRequest;
+  Future<ui.Rect>? _boundsRequest;
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +38,11 @@ class _MyWidgetState extends State<MyWidget> {
         fontStyle: FontStyle.italic,
       ),
     );
-    boundsRequest ??= getTextBounds(text: textSpan, context: context);
+    _boundsRequest ??= getTextBounds(text: textSpan, context: context);
     return Padding(
       padding: const EdgeInsets.only(left: 16),
       child: FutureBuilder(
-        future: boundsRequest,
+        future: _boundsRequest,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             final bounds = snapshot.data;
