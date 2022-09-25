@@ -11,6 +11,8 @@ Just for me
 
 * I converted the Flutter starter app so that an AnimationBuilder listens to a ValueNotifier and therefore the State object can be omitted.
 
+* * *
+
 ## [Draw text on image canvas:](draw_text_on_image_canvas.dart)
 
 no scale:
@@ -31,5 +33,11 @@ To determine the smallest rectangle that completely encloses a single-line text:
 * The bounding rectangle can also have negative values.
 * (Caution) Documentation on `TextPainter.width`: *The horizontal space required to paint this text.* Not quite right: With many fonts and italics, the space is exceeded both to the left and to the right. Therefore, to be on the safe side, I initially widen the image by 20 percent.
 * (Caution) The rectangle is only correct if the text itself can determine how much space it takes up. But if there is too little space, the text may be scaled down or wrapped into multiple lines.
+
+* * *
+
+## [Shortcuts Intents Actions:](shortcuts_intents_actions.dart)
+
+<a><img src="images/shortcuts-intents-actions.gif" width=50%></a>
 
 * * *
