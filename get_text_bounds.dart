@@ -18,8 +18,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyWidget extends StatelessWidget {
+class MyWidget extends StatefulWidget {
   const MyWidget({super.key});
+
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  Future<ui.Rect>? boundsRequest;
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +38,11 @@ class MyWidget extends StatelessWidget {
         fontStyle: FontStyle.italic,
       ),
     );
+    boundsRequest ??= getTextBounds(text: textSpan, context: context);
     return Padding(
       padding: const EdgeInsets.only(left: 16),
       child: FutureBuilder(
-        future: getTextBounds(text: textSpan, context: context),
+        future: boundsRequest,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             final bounds = snapshot.data;
@@ -82,8 +90,7 @@ Future<Rect> getTextBounds({
     textDirection: textDirection,
   );
   painter.layout();
-  const extend = 1.2; // This 20 percent extra width should be enough
-  final extraWidth = (extend * painter.width).toInt();
+  final extraWidth = 2 * painter.height.toInt();
   final width = painter.width.toInt() + extraWidth;
   final height = painter.height.toInt();
   final shift = extraWidth / 2; // Create extra space to the left
