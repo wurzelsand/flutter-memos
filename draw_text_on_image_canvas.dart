@@ -26,25 +26,34 @@ class MyWidget extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<MyWidget> {
-  Future<ui.Image>? imageRequest;
+  Future<Image>? imageRequest;
 
-  Future<ui.Image> textToImage({
+  Future<Image> textToImage({
     required TextSpan text,
-    required double upscale,
+    required BuildContext context,
   }) async {
+    final mediaQueryData = MediaQuery.of(context);
+    final devicePixelRatio = mediaQueryData.devicePixelRatio;
+    final textScaleFactor = mediaQueryData.textScaleFactor;
+
     ui.PictureRecorder recorder = ui.PictureRecorder();
     final canvas = Canvas(recorder);
     final painter = TextPainter(
       text: text,
-      textDirection: TextDirection.ltr,
-      textScaleFactor: upscale,
+      textDirection: Directionality.of(context),
+      textScaleFactor: devicePixelRatio * textScaleFactor,
     );
     painter.layout();
     painter.paint(canvas, Offset.zero);
-    final ui.Image image = await recorder
-        .endRecording()
-        .toImage(painter.width.floor(), painter.height.floor());
-    return image;
+    final ui.Image uiImage = await recorder.endRecording().toImage(
+          painter.width.ceil(),
+          painter.height.ceil(),
+        );
+    final data = await uiImage.toByteData(format: ui.ImageByteFormat.png);
+    return Image.memory(data!.buffer.asUint8List(),
+        scale: devicePixelRatio,
+        width: uiImage.width / devicePixelRatio,
+        height: uiImage.height / devicePixelRatio);
   }
 
   @override
@@ -56,30 +65,21 @@ class _MyWidgetState extends State<MyWidget> {
         fontSize: 200,
       ),
     );
-    final upscale = MediaQuery.of(context).devicePixelRatio;
-    imageRequest ??= textToImage(text: textSpan, upscale: upscale);
+    imageRequest ??= textToImage(text: textSpan, context: context);
     return FutureBuilder(
       future: imageRequest,
       builder: ((context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           final image = snapshot.data;
           if (image != null) {
-            final width = image.width / upscale;
-            final height = image.height / upscale;
             return Stack(
               children: [
                 Container(
-                  width: width,
-                  height: height,
+                  width: image.width,
+                  height: image.height,
                   color: Colors.green,
                 ),
-                SizedBox(
-                  width: width,
-                  height: height,
-                  child: RawImage(
-                    image: image,
-                  ),
-                ),
+                image,
               ],
             );
           }
