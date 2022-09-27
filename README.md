@@ -21,6 +21,27 @@ no scale:
 upscaled:
 <a><img src="images/draw-text-upscale.png"></a>
 
+* To display a `ui.Image` directly as a widget without having converted it to an `Image` first (you need to calculate the `width` and `height` before):
+
+    ```dart
+    return Stack(
+    children: [
+        Container(
+        width: width,
+        height: height,
+        color: Colors.green,
+        ),
+        SizedBox(
+        width: width,
+        height: height,
+        child: RawImage(
+            image: image,
+        ),
+        ),
+    ],
+    );
+    ```
+
 * * *
 
 ## [Get text bounds:](get_text_bounds.dart)
@@ -40,7 +61,7 @@ To determine the smallest rectangle that completely encloses a single-line text:
 
 <a><img src="images/shortcuts-intents-actions.gif" width=50%></a>
 
-We define a `Shortcut` (cmd+T) that applies globally to all trees. The `Shortcut` is associated with an `Intent`. The `Intent` in turn is connected to `Actions` in different widgets and these `Actions` are implemented differently each time: The `ColorToggler` changes the color of its button label while the `WeightToggler` changes the font of its button between normal and bold. Alternatively, the `Actions` can be called directly by pressing a button.
+We define a `Shortcut` (cmd+T) that applies globally to all trees. The `Shortcut` is associated with an `Intent`. The `Intent` in turn is connected to `Actions` in different widgets and these `Actions` are implemented differently each time: The `ColorToggler` changes the color of its button label while the `WeightToggler` changes the font of its button between normal and bold. Alternatively, the `Actions` can be called directly by pressing the button itself.
 
 * In the `ColorToggler` and in the `WeightToggler` we cannot return `ElevatedButton` directly because we need the `BuildContext` of the `Action` widget and not that of the `ColorToggler` and `WeightToggler` respectively. Therefore we need `Builder`.
 
