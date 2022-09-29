@@ -68,6 +68,6 @@ We define a `Shortcut` (cmd+T) that applies globally to all widget trees. The `S
 * `ValueNotifier` and `AnimationBuilder` make our work easier by making calls to `setState` unnecessary.
 
 * * *
-## [FocusableActionDetector Example from Flutter documention](focusable_action_detector_example)
+## [FocusableActionDetector Example from Flutter documention](focusable_action_detector_example.dart)
 
 <a><img src="images/focusable-action-detector.gif" width=50%></a>
