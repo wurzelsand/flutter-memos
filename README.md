@@ -7,13 +7,13 @@ Just for me
 
 ## [Animation with cubits](owl_animation.dart)
 
-<a><img src="images/owl-animation.gif" width=25%></a>
+<a><img src="images/owl-animation.gif" width=50%></a>
 
 ***
 
 ## [AnimationBuilder with ValueNotifier:](animation_builder_with_value_notifier.dart)
 
-<a><img src="images/starter-with-value-notifier.gif" width=25%></a>
+<a><img src="images/starter-with-value-notifier.gif" width=50%></a>
 
 * I converted the Flutter starter app so that an AnimationBuilder listens to a ValueNotifier and therefore the State object can be omitted.
 
