@@ -19,6 +19,12 @@ Just for me
 
 * * *
 
+## [Custom Painter](custom_painter.dart)
+
+<a><img src="images/custom-painter.png" width=50%></a>
+
+* * *
+
 ## [Draw text on image canvas:](draw_text_on_image_canvas.dart)
 
 no scale:
