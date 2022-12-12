@@ -16,9 +16,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Shortcuts(
         shortcuts: shortcuts,
-        child: Column(children: [
+        child: Column(children: const [
           ColorToggler(),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
           WeightToggler()
         ]),
       ),
@@ -26,14 +26,25 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class ColorToggler extends StatelessWidget {
-  ColorToggler({super.key});
+class ColorToggler extends StatefulWidget {
+  const ColorToggler({super.key});
 
-  final model = ColorToggleModel();
+  @override
+  State<ColorToggler> createState() => _ColorTogglerState();
+}
+
+class _ColorTogglerState extends State<ColorToggler> {
+  var color = Colors.white;
 
   late final actions = <Type, Action<Intent>>{
-    ToggleIntent: ColorToggleAction(model),
+    ToggleIntent: ToggleAction(toggleColor),
   };
+
+  void toggleColor() {
+    setState(() {
+      color = color == Colors.white ? Colors.greenAccent : Colors.white;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +54,9 @@ class ColorToggler extends StatelessWidget {
         builder: (context) {
           return ElevatedButton(
             onPressed: Actions.handler(context, const ToggleIntent()),
-            child: AnimatedBuilder(
-              animation: model.color,
-              builder: (context, child) => Text(
-                'toggle',
-                style: TextStyle(
-                    fontWeight: FontWeight.normal, color: model.color.value),
-              ),
+            child: Text(
+              'toggle',
+              style: TextStyle(fontWeight: FontWeight.normal, color: color),
             ),
           );
         },
@@ -58,14 +65,26 @@ class ColorToggler extends StatelessWidget {
   }
 }
 
-class WeightToggler extends StatelessWidget {
-  WeightToggler({super.key});
+class WeightToggler extends StatefulWidget {
+  const WeightToggler({super.key});
 
-  final model = WeightToggleModel();
+  @override
+  State<WeightToggler> createState() => _WeightTogglerState();
+}
+
+class _WeightTogglerState extends State<WeightToggler> {
+  var fontWeight = FontWeight.normal;
 
   late final actions = <Type, Action<Intent>>{
-    ToggleIntent: WeightToggleAction(model),
+    ToggleIntent: ToggleAction(toggleFontWeight),
   };
+
+  void toggleFontWeight() {
+    setState(() {
+      fontWeight =
+          fontWeight == FontWeight.normal ? FontWeight.bold : FontWeight.normal;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,13 +94,9 @@ class WeightToggler extends StatelessWidget {
         builder: (context) {
           return ElevatedButton(
             onPressed: Actions.handler(context, const ToggleIntent()),
-            child: AnimatedBuilder(
-              animation: model.weight,
-              builder: (context, child) => Text(
-                'toggle',
-                style: TextStyle(
-                    fontWeight: model.weight.value, color: Colors.white),
-              ),
+            child: Text(
+              'toggle',
+              style: TextStyle(fontWeight: fontWeight, color: Colors.white),
             ),
           );
         },
@@ -94,35 +109,11 @@ class ToggleIntent extends Intent {
   const ToggleIntent();
 }
 
-class ColorToggleAction extends Action<ToggleIntent> {
-  ColorToggleAction(this.model);
+class ToggleAction extends Action<ToggleIntent> {
+  ToggleAction(this.toggleCallback);
 
-  final ColorToggleModel model;
-
-  @override
-  void invoke(ToggleIntent intent) {
-    model.color.value =
-        (model.color.value == Colors.white) ? Colors.greenAccent : Colors.white;
-  }
-}
-
-class ColorToggleModel {
-  var color = ValueNotifier<Color>(Colors.white);
-}
-
-class WeightToggleAction extends Action<ToggleIntent> {
-  WeightToggleAction(this.model);
-
-  final WeightToggleModel model;
+  final VoidCallback toggleCallback;
 
   @override
-  void invoke(ToggleIntent intent) {
-    model.weight.value = (model.weight.value == FontWeight.normal)
-        ? FontWeight.bold
-        : FontWeight.normal;
-  }
-}
-
-class WeightToggleModel {
-  var weight = ValueNotifier<FontWeight>(FontWeight.normal);
+  void invoke(ToggleIntent intent) => toggleCallback();
 }
