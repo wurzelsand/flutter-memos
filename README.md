@@ -77,8 +77,6 @@ We define a `Shortcut` (cmd+T) that applies globally to all widget trees. The `S
 
 * In the `ColorToggler` and in the `WeightToggler` we cannot return `ElevatedButton` directly because we need the `BuildContext` of the `Action` widget and not that of the `ColorToggler` and `WeightToggler` respectively. Therefore we need `Builder`.
 
-* `ValueNotifier` and `AnimationBuilder` make our work easier by making calls to `setState` unnecessary.
-
 * * *
 ## [FocusableActionDetector Example from Flutter documention](focusable_action_detector_example.dart)
 
