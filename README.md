@@ -81,3 +81,11 @@ We define a `Shortcut` (cmd+T) that applies globally to all widget trees. The `S
 ## [FocusableActionDetector Example from Flutter documention](focusable_action_detector_example.dart)
 
 <a><img src="images/focusable-action-detector.gif" width=50%></a>
+
+I changed the Example:
+
+* Swapped `FocusableActionDetector` and `GestureDetector` to make `onTap: Actions.handler(...)` possible (removes code duplication with `_toggleState`).
+  
+* Added `widget.onPressed()` to `_toggleState` to invoke callback.
+  
+* Added type information to `_actionMap` to prevent crash.
