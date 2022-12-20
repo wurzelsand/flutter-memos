@@ -56,6 +56,12 @@ class _AppState extends State<App> with SingleTickerProviderStateMixin {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 }
 
 // RadialExpansion will clip its `child` depending on how it is constrained. For
