@@ -60,24 +60,20 @@ class FadeInDemo extends StatelessWidget {
                     ? context.read<FadeCubit>().fadeIn()
                     : context.read<FadeCubit>().fadeOut(),
               ),
-              BlocBuilder<FadeCubit, Opacity>(
-                builder: (context, opacity) {
-                  return AnimatedOpacity(
-                    duration: const Duration(seconds: 2),
-                    opacity: opacity.raw,
-                    onEnd: () => context.read<LabelCubit>().set(
-                        opacity == Opacity.transparent
-                            ? 'Show Details'
-                            : 'Hide Details'),
-                    child: Column(
-                      children: const [
-                        Text('Type: Owl'),
-                        Text('Age: 39'),
-                        Text('Employment: None'),
-                      ],
-                    ),
-                  );
-                },
+              AnimatedOpacity(
+                duration: const Duration(seconds: 2),
+                opacity: opacity.raw,
+                onEnd: () => context.read<LabelCubit>().set(
+                    opacity == Opacity.transparent
+                        ? 'Show Details'
+                        : 'Hide Details'),
+                child: Column(
+                  children: const [
+                    Text('Type: Owl'),
+                    Text('Age: 39'),
+                    Text('Employment: None'),
+                  ],
+                ),
               )
             ]);
           },
