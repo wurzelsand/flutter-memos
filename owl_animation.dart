@@ -52,13 +52,13 @@ class FadeInDemo extends StatelessWidget {
             return Column(children: <Widget>[
               Image.network(owlUrl),
               TextButton(
+                onPressed: opacity == Opacity.transparent
+                    ? context.read<FadeCubit>().fadeIn
+                    : context.read<FadeCubit>().fadeOut,
                 child: Text(
                   label,
                   style: const TextStyle(color: Colors.blueAccent),
                 ),
-                onPressed: () => opacity == Opacity.transparent
-                    ? context.read<FadeCubit>().fadeIn()
-                    : context.read<FadeCubit>().fadeOut(),
               ),
               AnimatedOpacity(
                 duration: const Duration(seconds: 2),
