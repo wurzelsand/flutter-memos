@@ -90,3 +90,9 @@ I changed the Example:
 * Added `widget.onPressed()` to `_toggleState` to invoke callback.
   
 * Added type information to `_actionMap` to prevent crash.
+
+# [Login with BloC and `go_router`](go_router_with_bloc.dart)
+
+<a><img src="images/go_router-bloc-1020.gif" width=510></a>
+
+* Unfortunately, the path is not displayed in the address bar directly after logging out and logging back in. 
