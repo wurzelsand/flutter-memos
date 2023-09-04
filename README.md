@@ -96,3 +96,7 @@ I changed the Example:
 <a><img src="images/go_router-bloc-1020.gif" width=510></a>
 
 * Unfortunately, the path is not displayed in the address bar directly after logging out and logging back in. 
+
+# [Firebase, BloC and `go_router` login](firebase_bloc_login.dart)
+
+<a><img src="images/firebase-bloc-login.gif" width=520></a>
