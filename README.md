@@ -95,7 +95,21 @@ I changed the Example:
 
 <a><img src="images/go_router-bloc-1020.gif" width=510></a>
 
-* Unfortunately, the path is not displayed in the address bar directly after logging out and logging back in. 
+* Unfortunately, the path is not displayed in the address bar directly after logging out and logging back in.
+  
+    * Solution:
+
+        Instead of a static object:
+
+        ```dart
+        final _routes = GoRouter(...);
+        ```
+
+        we should create a new object each time:
+
+        ```dart
+        GoRouter get _routes => GoRouter(...);
+        ```
 
 # [Firebase, BloC and `go_router` login](firebase_bloc_login.dart)
 
