@@ -114,3 +114,34 @@ I changed the Example:
 # [Firebase, BloC and `go_router` login](firebase_bloc_login.dart)
 
 <a><img src="images/firebase-bloc-login.gif" width=520></a>
+
+## Write and read Firebase Storage
+
+[firestore_messages_cubit.dart](firestore_messages_cubit.dart)
+
+Synchronize messages:
+
+```dart
+BlocBuilder<MessagesCubit, List<Message>>(
+  builder: (context, state) {
+    final messages = state.map((message) =>
+        Text('${message.simpleUser.email}: ${message.content}'));
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxHeight: 400),
+      child: SingleChildScrollView(
+        child: Column(children: [...messages]),
+      ),
+    );
+  },
+),
+```
+
+Send messages:
+
+```dart
+context
+  .read<MessagesCubit>()
+  .sendMessage(Message(
+    content: _messageController.text,
+    simpleUser: (state as Authenticated).user.toSimpleUser));
+```
