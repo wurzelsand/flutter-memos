@@ -27,8 +27,6 @@ class MainApp extends StatefulWidget {
 typedef Json = Map<String, dynamic>;
 
 class _MainAppState extends State<MainApp> {
-  List<String> customers = [];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
