@@ -145,3 +145,9 @@ context
     content: _messageController.text,
     simpleUser: (state as Authenticated).user.toSimpleUser));
 ```
+
+## Firebase only
+
+[firestore_only.dart](firestore_only.dart)
+
+<a><img src="images/firestore_only.gif" width=490></a>
