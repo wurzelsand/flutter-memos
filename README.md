@@ -151,3 +151,9 @@ context
 [firestore_only.dart](firestore_only.dart)
 
 <a><img src="images/firestore_only.gif" width=490></a>
+
+## Transition animation with fixed and moving widgets
+
+[transistion_animation_with_fixed_parts.dart](transistion_animation_with_fixed_parts.dart)
+
+<a><img src="images/animation-with-fixed-drawer.gif" width=512></a>
