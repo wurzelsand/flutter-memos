@@ -154,7 +154,7 @@ context
 
 ## Transition animation with fixed and moving widgets
 
-When we navigate between different pages with a 'Router', the entire screen is animated during the transition. However, if parts of the screen are to be static, the [Animations package](https://pub.dev/packages/animations) will help us. Here, the drawer and the top line of text should be static. The long text below should slide during the transition.
+When we navigate between different pages with a 'Router', the entire screen is animated during the transition. However, if parts of the screen are to be static, the [animations package](https://pub.dev/packages/animations) will help us. Here, the drawer and the top line of text should be static. The long text below should slide during the transition.
 
 [transition_animation_with_fixed_parts.dart](transition_animation_with_fixed_parts.dart)
 
