@@ -154,6 +154,36 @@ context
 
 ## Transition animation with fixed and moving widgets
 
+When we navigate between different pages with a 'Router', the entire screen is animated during the transition. However, if parts of the screen are to be static, the [Animations package](https://pub.dev/packages/animations) will help us. Here, the drawer and the top line of text should be static. The long text below should slide during the transition.
+
 [transition_animation_with_fixed_parts.dart](transition_animation_with_fixed_parts.dart)
 
 <a><img src="images/animation-with-fixed-drawer.gif" width=512></a>
+
+To slow down transition animation:
+
+```dart
+import 'package:flutter/scheduler.dart' show timeDilation;
+
+void main() {
+  timeDilation = 4;
+  runApp(const MainApp());
+}
+```
+
+The key is `PageTransitionSwitcher`:
+
+```dart
+PageTransitionSwitcher(
+  reverse: _reverse,
+  transitionBuilder: (child, animation, secondaryAnimation) {
+    return SharedAxisTransition(
+      animation: animation,
+      secondaryAnimation: secondaryAnimation,
+      transitionType: SharedAxisTransitionType.horizontal,
+      child: child,
+    );
+  },
+  child: PageWithButton(key: ValueKey(page), page: page),
+),
+```
