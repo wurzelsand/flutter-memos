@@ -71,7 +71,7 @@ class _MainWidgetState extends State<MainWidget> {
                 child: child,
               );
             },
-            child: PageWithButton(key: ValueKey(page), page: page),
+            child: PageWithLongText(key: ValueKey(page), page: page),
           ),
         ],
       ),
@@ -93,8 +93,8 @@ class _MainWidgetState extends State<MainWidget> {
       });
 }
 
-class PageWithButton extends StatelessWidget {
-  const PageWithButton({required super.key, required this.page});
+class PageWithLongText extends StatelessWidget {
+  const PageWithLongText({required super.key, required this.page});
 
   final int page;
 
