@@ -186,3 +186,8 @@ PageTransitionSwitcher(
   child: PageWithButton(key: ValueKey(page), page: page),
 ),
 ```
+
+## [MenuAnchor and FloatingActionButton](menu_anchor_floating_action_button.dart)
+
+<a><img src="images/menu_anchor_floating_action_button.gif" width=353></a>
+
