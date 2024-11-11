@@ -191,3 +191,81 @@ PageTransitionSwitcher(
 
 <a><img src="images/menu_anchor_floating_action_button.gif" width=353></a>
 
+I want the `FloatingActionButton` to be invisible when the menu is displayed. It should also let all events (e.g. mouse clicks) through:
+
+```dart
+bool _menuOpen = false;
+
+Scaffold(
+  floatingActionButton: IgnorePointer(
+    ignoring: _menuOpen,
+    child: Opacity(
+      opacity: _menuOpen ? 0.0 : 1.0,
+      child: FloatingActionButton.small(
+        ...
+        child: MenuAnchor(
+          ...
+          child: const Icon(Icons.menu),
+        ),
+      ),
+    ),
+  ),
+)
+```
+
+I am not satisfied with the positioning of the menu. This is because the anchor point of the menu is at the bottom right:
+
+```dart
+MenuAnchor(
+  style: const MenuStyle(alignment: Alignment.bottomRight),
+  alignmentOffset: const Offset(-32, -32), // doesn't work as expected
+  ...
+)
+```
+
+## [Modeless Dialog](modeless_dialog.dart)
+
+<a><img src="images/modeless_dialog.gif" width=514></a>
+
+I am using an `OverlayEntry` for the floating dialog window. I need access to `entry` in `_Dialog`:
+
+```dart
+void _openModelessDialog(BuildContext context, {void Function()? onClose}) {
+  OverlayEntry? entry;
+  entry = OverlayEntry(
+    builder: (context) => _Dialog(
+      entry: entry,
+      onClose: onClose,
+    ),
+  );
+  Overlay.of(context).insert(entry);
+}
+```
+
+That's the reason, why I need `entry` in `_Dialog`: to remove it from the `Overlay`:
+
+```dart
+ElevatedButton(
+  onPressed: () {
+    widget.entry?.remove();
+  },
+  child: const Text('Close'),
+),
+```
+
+We can use `Draggable` for the floaging animation. A `DragTarget` is not necessary for `Draggable`:
+
+```dart
+Widget _draggable(Widget dialogBox) {
+  return Draggable(
+    onDragEnd: (details) {
+      setState(() {
+        _offset = details.offset;
+      });
+    },
+    feedback: dialogBox,
+    childWhenDragging: Container(),
+    child: dialogBox,
+  );
+}
+```
