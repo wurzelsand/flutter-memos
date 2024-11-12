@@ -242,7 +242,7 @@ void _openModelessDialog(BuildContext context, {void Function()? onClose}) {
 }
 ```
 
-That's the reason, why I need `entry` in `_Dialog`: to remove it from the `Overlay`:
+That's the reason, why I need `entry` in `_Dialog`, to remove it from the `Overlay`:
 
 ```dart
 ElevatedButton(
