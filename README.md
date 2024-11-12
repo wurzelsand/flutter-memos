@@ -269,3 +269,12 @@ Widget _draggable(Widget dialogBox) {
   );
 }
 ```
+
+The communication between the dialog and the `ListView` takes place via `Provider`, not `Navigator`:
+
+```dart
+ElevatedButton(
+  onPressed: () => context.read<ItemProvider>().addHundredItems(),
+  child: const Text('Add 100 items'),
+),
+```
