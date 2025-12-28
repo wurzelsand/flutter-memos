@@ -14,13 +14,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Shortcuts(
-        shortcuts: shortcuts,
-        child: Column(children: const [
-          ColorToggler(),
-          SizedBox(height: 8),
-          WeightToggler()
-        ]),
+      theme: .light(useMaterial3: false),
+      themeMode: .light,
+      home: Scaffold(
+        body: Center(
+          child: Shortcuts(
+            shortcuts: shortcuts,
+            child: Column(
+              children: const [
+                ColorToggler(),
+                SizedBox(height: 8),
+                WeightToggler(),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -81,8 +89,9 @@ class _WeightTogglerState extends State<WeightToggler> {
 
   void toggleFontWeight() {
     setState(() {
-      fontWeight =
-          fontWeight == FontWeight.normal ? FontWeight.bold : FontWeight.normal;
+      fontWeight = fontWeight == FontWeight.normal
+          ? FontWeight.bold
+          : FontWeight.normal;
     });
   }
 
