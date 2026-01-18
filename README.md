@@ -9,6 +9,8 @@ Just for me
 
 <a><img src="images/owl-animation.gif" width=50%></a>
 
+* [Same with Riverpod](owl_animation_riverpod.dart)
+
 ***
 
 ## [AnimationBuilder with ValueNotifier:](animation_builder_with_value_notifier.dart)
