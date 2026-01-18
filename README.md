@@ -17,6 +17,7 @@ Just for me
 
 * I converted the Flutter starter app so that an AnimationBuilder listens to a ValueNotifier and therefore the State object can be omitted.
 * [Same with Provider and ChangeNotifier](flutter_demo_home_page_provider.dart)
+* [Same with Riverpod](flutter_demo_home_page_riverpod.dart)
 
 * * *
 
