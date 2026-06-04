@@ -132,25 +132,28 @@ class FirebaseAuthController {
     authState.dispose(); // streamSignal bringt seine eigene dispose-Methode mit
   }
 
-  void _setReloading() {
-    final current = authState.value;
-    if (current is AsyncData<String?>) {
-      authState.value = AsyncDataReloading(current.value);
-    } else if (current is AsyncError<String?>) {
-      authState.value = AsyncErrorReloading(current.error, current.stackTrace);
-    } else {
-      authState.value = const AsyncLoading();
-    }
-  }
-
   Future<void> signIn() async {
-    _setReloading(); // Den aktuellen Zustand cachen und auf Reloading setzen
+    authState.markAsReloading();
     await _auth.signIn();
   }
 
   Future<void> signOut() async {
-    _setReloading(); // Den aktuellen Zustand cachen und auf Reloading setzen
+    authState.markAsReloading();
     await _auth.signOut();
+  }
+}
+
+extension<T> on StreamSignal<T> {
+  void markAsReloading() {
+    final current = value;
+    value = switch (current) {
+      AsyncData(value: final v) => AsyncDataReloading(v),
+      AsyncError(:final error, :final stackTrace) => AsyncErrorReloading(
+        error,
+        stackTrace,
+      ),
+      _ => AsyncLoading<T>(),
+    };
   }
 }
 
