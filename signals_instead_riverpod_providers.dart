@@ -121,24 +121,15 @@ class FirebaseAuth {
 }
 
 class FirebaseAuthController {
-  FirebaseAuthController(this._auth) {
-    // Wir hören auf den Stream und wandeln die Events in ein AsyncState-Signal um
-    _subscription = _auth.authStateChanges().listen(
-      (user) {
-        authState.value = AsyncData(user);
-      },
-      onError: (error, stackTrace) {
-        authState.value = AsyncError(error, stackTrace);
-      },
-    );
-  }
+  FirebaseAuthController(this._auth);
 
   final FirebaseAuth _auth;
-  late final StreamSubscription<String?> _subscription;
-  final authState = signal<AsyncState<String?>>(AsyncLoading());
+
+  // streamSignal wandelt den Stream automatisch um und kümmert sich um Data/Error/Loading
+  late final authState = streamSignal<String?>(() => _auth.authStateChanges());
 
   void dispose() {
-    _subscription.cancel();
+    authState.dispose(); // streamSignal bringt seine eigene dispose-Methode mit
   }
 
   void _setReloading() {
@@ -340,13 +331,17 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () => GetIt.I<FlexibleCounter>(
                         instanceName: 'step1',
                       ).increment(),
-                      child: Text('${flexibleCounter1.current.value} (next -> +1)'),
+                      child: Text(
+                        '${flexibleCounter1.current.value} (next -> +1)',
+                      ),
                     ),
                     ElevatedButton(
                       onPressed: () => GetIt.I<FlexibleCounter>(
                         instanceName: 'step2',
                       ).increment(),
-                      child: Text('${flexibleCounter2.current.value} (next -> +2)'),
+                      child: Text(
+                        '${flexibleCounter2.current.value} (next -> +2)',
+                      ),
                     ),
                   ],
                 ),
